@@ -1,6 +1,7 @@
 import sys
 import os
 
+
 from modes import *
 
 def get_stopwords(stop_words_file):
@@ -10,11 +11,7 @@ def get_stopwords(stop_words_file):
 
 def main(args):
     if args.c:
-        ''' TODO:
-            step-0: character frequency
-        '''
-        # should call like this: mode_c(args.c)
-        pass
+        mode_c(args.c)
     elif args.f:
         pass
         

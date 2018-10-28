@@ -1,8 +1,23 @@
 import nltk
+import re
+from collections import Counter
 
 from utils import get_words, get_stopwords
 
-def mode_c():
+def mode_c(file_pth):
+    rule = re.compile(r"[^a-z]")
+    counter = Counter()
+    with open(file_pth, encoding="utf-8") as f:
+        for line in f:
+            line_result = rule.sub("" ,line.lower())
+            counter.update(line_result)
+    sum = 0 
+    for charactor  in counter:
+        frequency = counter[charactor]
+        sum += frequency
+    for charactor , frequency in counter.most_common():
+        print("Charactor: {0} Times: {1} Frequency: {2} "\
+        .format(charactor , frequency , frequency/sum)) 
     pass
 
 def mode_f(filename, n=0):
