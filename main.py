@@ -9,9 +9,9 @@ def main(args):
     if args.c:
         mode_c(args.c)
     elif args.f:
-        mode_f(args.f, args.n)
+        mode_f(args.f, args.n, args.x)
     elif args.d:
-        mode_d(args.d, args.s, args.n)
+        mode_d(args.d, args.s, args.n, args.x)
 
 if __name__ == '__main__':
     import argparse
