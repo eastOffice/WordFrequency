@@ -7,7 +7,7 @@ from modes import *
 
 def main(args):
     if args.c:
-        mode_c(args.c)
+        mode_c(args.c, args.n)
     elif args.f:
         mode_f(args.f, args.n, args.x)
     elif args.d:
