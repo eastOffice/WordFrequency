@@ -3,7 +3,8 @@ import re
 from collections import Counter
 from functools import wraps
 
-from utils import get_words, get_stopwords , get_phrases
+from utils import get_words, get_stopwords , get_phrases \
+           ,get_sentences
 
 def fn_timer(function): 
     @wraps(function)
@@ -19,7 +20,7 @@ def fn_timer(function):
 def mode_c(file_name , n = 0):
     rule = re.compile(r"[^a-z]")
     counter = Counter()
-    with open(filename, encoding="utf-8") as f:
+    with open(file_name, encoding="utf-8") as f:
         for line in f:
             line_result = rule.sub("" ,line.lower())
             counter.update(line_result)
@@ -65,9 +66,25 @@ def mode_f(filename, n=0, stop_words_file=None):
             print('%40s\t%d' % (str(key), val))
             count += 1
 
+@fn_timer
 def mode_p(file_pth , show_num , length):
+
+    import time
+    t0 = time.time()
+
     with open(file_pth, 'r' , encoding='utf-8') as f:
-        phrases = get_phrases(f.read().lower(), length)
+        sentences = get_sentences(f.read().lower())
+    
+    t1 = time.time()
+    print('get_sentences costs %s (s)' %(t1 - t0))
+
+    phrases = []
+    for item in sentences:
+        phrases.extend(get_phrases(item, length))
+
+    t2 = time.time()
+    print('get_phrases costs %s (s)' %(t2 - t1))
+
     phrases_freq = nltk.FreqDist(phrases)
     phrases_freq = sorted(phrases_freq.items(), \
         key=lambda item:item[1], reverse=True)

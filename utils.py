@@ -2,24 +2,31 @@ import os
 import sys
 import re
 
-def get_words(text): return re.findall('[a-z]+[0-9a-z]*', text.lower())
+
+rule_verb = '[a-z0-9]+'
+
+def get_words(text): return re.findall(rule_verb, text.lower())
+
+def get_sentences(text):
+    return re.findall('[a-z0-9 \n\t\r]+', text)
+
 
 def get_phrases(text , n):
     phrases = []
     if n < 2:
         sys.exit(2)
-    reg_rule = '[a-z]+[0-9a-z]*'
+    reg_rule = rule_verb
     for i in range(n-1):
-        reg_rule += '[\t \n\r]+[a-z]+[0-9a-z]*'
+        reg_rule += '[\t \n\r]+'+rule_verb
     rule = re.compile(reg_rule)
     while(1):
-        target = rule.search(text)
+        target = rule.search(text[:])
         if target is None : 
             break
         target_span = target.span()
         target_str = text[target_span[0]:target_span[1]]
         phrases.append(target_str)
-        del_point = re.search('[a-z]+[0-9a-z]*[\r\t\n ]+',target_str).span()[1] +\
+        del_point = re.search(rule_verb+'[\r\t\n ]+',target_str).span()[1] +\
             target_span[0]-1
         text = text[del_point:]
     return phrases
