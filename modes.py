@@ -1,8 +1,8 @@
 import nltk
-import re
 from collections import Counter
 from functools import wraps
 
+<<<<<<< HEAD
 from utils import get_words, get_stopwords , get_phrases
 
 def fn_timer(function): 
@@ -17,9 +17,14 @@ def fn_timer(function):
     return function_timer
 
 def mode_c(file_pth , n = 0):
+=======
+from utils import *
+
+def mode_c(filename, n=26):
+>>>>>>> e5b02af076a6abd149d84797bb3ab9fca4223f4e
     rule = re.compile(r"[^a-z]")
     counter = Counter()
-    with open(file_pth, encoding="utf-8") as f:
+    with open(filename, encoding="utf-8") as f:
         for line in f:
             line_result = rule.sub("" ,line.lower())
             counter.update(line_result)
@@ -27,6 +32,7 @@ def mode_c(file_pth , n = 0):
     for charactor  in counter:
         frequency = counter[charactor]
         sum += frequency
+<<<<<<< HEAD
     count = 0 
     for charactor , frequency in counter.most_common():
       if n == 0 :
@@ -38,6 +44,14 @@ def mode_c(file_pth , n = 0):
           print("Charactor: {0} Times: {1} Frequency: {2} "\
           .format(charactor , frequency , frequency/sum))   
     pass
+=======
+    count = 0
+    for charactor , frequency in counter.most_common():
+        if count == n: break
+        print('%40s\t%f' % (charactor, frequency/sum))
+        count += 1
+
+>>>>>>> e5b02af076a6abd149d84797bb3ab9fca4223f4e
 
 @fn_timer
 def mode_f(filename, n=0, stop_words_file=None):
@@ -45,7 +59,12 @@ def mode_f(filename, n=0, stop_words_file=None):
         - n: return the first n words, 0 returns all
     '''
     with open(filename, 'r', encoding='utf-8') as f:
+<<<<<<< HEAD
         words = get_words(f.read())
+=======
+        for line in f:
+            words.extend(get_words(line))
+>>>>>>> e5b02af076a6abd149d84797bb3ab9fca4223f4e
     word_freq = nltk.FreqDist(words)
     
     if stop_words_file is not None:
@@ -62,9 +81,10 @@ def mode_f(filename, n=0, stop_words_file=None):
         count = 0
         for key, val in word_freq:
             if count == n: break
-            print(str(key) + ':' + str(val))
+            print('%40s\t%d' % (str(key), val))
             count += 1
 
+<<<<<<< HEAD
 def mode_p(file_pth , show_num , length):
     with open(file_pth, 'r' , encoding='utf-8') as f:
         phrases = get_phrases(f.read().lower(), length)
@@ -81,5 +101,27 @@ def mode_p(file_pth , show_num , length):
             print(str(key) + ':' + str(val))
             count += 1
 
+=======
+
+def mode_d(directory, is_recursive, n=0, stop_words_file=None):
+    if is_recursive:
+        # here returns the final path
+        file_list = list_all_files(directory)
+    else:
+        # here is only the relative path, need path.join
+        fl = os.listdir(directory)
+        file_list = []
+        for i in range(len(fl)):
+            t = os.path.join(directory, fl[i])
+            if os.path.isfile(t):
+                file_list.append(t)
+
+    for file in file_list:
+        print('File: %s' % file)
+        mode_f(file, n, stop_words_file)
+        
+
+    
+>>>>>>> e5b02af076a6abd149d84797bb3ab9fca4223f4e
 
 
