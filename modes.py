@@ -38,34 +38,9 @@ def mode_c(file_name , n=0):
 
 
 @fn_timer
-def mode_f(filename, n=0, stop_words_file=None):
-    ''' - filename: .txt to read
-        - n: return the first n words, 0 returns all
-    '''
-    with open(filename, 'r', encoding='utf-8') as f:
-        words = get_words(f.read())
-    word_freq = nltk.FreqDist(words)
-    
-    if stop_words_file is not None:
-        stop_words = get_stopwords(stop_words_file)
-        for key in list(word_freq.keys()):
-            if key in stop_words:
-                word_freq.pop(key)
-
-    word_freq = sorted(word_freq.items(), key=lambda item:item[1], reverse=True)
-    if n == 0:
-        for key, val in word_freq:
-            print('%40s\t%d' % (str(key), val))
-    else:
-        count = 0
-        for key, val in word_freq:
-            if count == n: break
-            print('%40s\t%d' % (str(key), val))
-            count += 1
-
-@fn_timer
-def mode_d(directory, is_recursive, n=0, stop_words_file=None):
-    if is_recursive:
+def mode_d(args):
+    directory = args.file_name
+    if args.s:
         # here returns the final path
         file_list = list_all_files(directory)
     else:
@@ -79,7 +54,37 @@ def mode_d(directory, is_recursive, n=0, stop_words_file=None):
 
     for file in file_list:
         print('File: %s' % file)
-        mode_f(file, n, stop_words_file)
+        if args.f:
+            mode_f(file, args.n, args.x)
+        elif args.p:
+            mode_p(file, args.n, args.p)
+
+@fn_timer
+def mode_f(filename, n=0, stop_words_file=None):
+    ''' - filename: .txt to read
+        - n: return the first n words, 0 returns all
+    '''
+    with open(filename, 'r', encoding='utf-8') as f:
+        words = get_words(f.read())
+    word_freq = nltk.FreqDist(words)
+    
+    if stop_words_file is not None:
+        stop_words = get_stopwords(stop_words_file)
+        key_list = list(word_freq.keys())
+        for key in key_list:
+            if key in stop_words:
+                word_freq.pop(key)
+
+    word_freq = sorted(word_freq.items(), key=lambda item:item[1], reverse=True)
+    if n == 0:
+        for key, val in word_freq:
+            print('%40s\t%d' % (str(key), val))
+    else:
+        count = 0
+        for key, val in word_freq:
+            if count == n: break
+            print('%40s\t%d' % (str(key), val))
+            count += 1
 
 @fn_timer
 def mode_p(file_pth , show_num , length):
@@ -112,6 +117,3 @@ def mode_p(file_pth , show_num , length):
             if count == show_num: break
             print(str(key) + ':' + str(val))
             count += 1
-
-
-

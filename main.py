@@ -11,14 +11,18 @@ def main(args):
     if args.file_name is None:
         print("Input a File")
         sys.exit(0)
-    if args.c:
-        mode_c(args.file_name, args.n)
-    elif args.f:
-        mode_f(args.file_name, args.n, args.x)
-    elif args.d:
-        mode_d(args.file_name, args.s, args.n, args.x)
-    elif args.p:
-        mode_p(args.file_name, args.n, args.p)
+    
+    if args.d:
+        mode_d(args)
+    else: 
+        if args.c:
+            mode_c(args.file_name, args.n)
+        elif args.f:
+            mode_f(args.file_name, args.n, args.x)
+        elif args.p:
+            mode_p(args.file_name, args.n, args.p)
+        elif args.d:
+            mode_d(args.file_name, args.s, args.n, args.x)
 
 if __name__ == '__main__':
     import argparse
