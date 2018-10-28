@@ -1,9 +1,7 @@
 import nltk
-import re
-import os
 from collections import Counter
 
-from utils import get_words, get_stopwords, list_all_files
+from utils import *
 
 def mode_c(filename, n=26):
     rule = re.compile(r"[^a-z]")

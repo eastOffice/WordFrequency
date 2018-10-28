@@ -24,6 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', action='store_true')
     parser.add_argument('-x', type=str)
     parser.add_argument('-v', type=str)
+    parser.add_argument('-q', type=str)
 
     args = parser.parse_args()
     # unspecified args will be None
