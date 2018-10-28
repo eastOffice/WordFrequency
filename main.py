@@ -12,11 +12,11 @@ def main(args):
         print("Input a File")
         sys.exit(0)
     if args.c:
-        mode_c(args.file_name , args.n)
+        mode_c(args.file_name, args.n)
     elif args.f:
         mode_f(args.file_name, args.n, args.x)
     elif args.d:
-        mode_d(args.d, args.s, args.n, args.x)
+        mode_d(args.file_name, args.s, args.n, args.x)
     elif args.p:
         mode_p(args.file_name, args.n, args.p)
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument('-n', type=int, default=0)
     parser.add_argument('-p', type=int)
     parser.add_argument('-f', action='store_true')
-    parser.add_argument('-d', type=str)
+    parser.add_argument('-d', action='store_true')
     parser.add_argument('-s', action='store_true')
     parser.add_argument('-x', type=str)
     parser.add_argument('-v', type=str)
