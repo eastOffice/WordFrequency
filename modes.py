@@ -54,14 +54,21 @@ def mode_f(filename, n=0, stop_words_file=None):
 
 def mode_d(directory, is_recursive, n=0, stop_words_file=None):
     if is_recursive:
+        # here returns the final path
         file_list = list_all_files(directory)
     else:
-        file_list = os.listdir(directory)
+        # here is only the relative path, need path.join
+        fl = os.listdir(directory)
+        file_list = []
+        for i in range(len(fl)):
+            t = os.path.join(directory, fl[i])
+            if os.path.isfile(t):
+                file_list.append(t)
+
+    for file in file_list:
+        print('processing: ', str(file))
+        mode_f(file, n, stop_words_file)
         
-    for i in range(len(file_list)):
-        file_path = os.path.join(directory, file_list[i])
-        if os.path.isfile(file_path):
-            pass
 
     
 
