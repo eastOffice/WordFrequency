@@ -1,8 +1,9 @@
 import nltk
 import re
+import os
 from collections import Counter
 
-from utils import get_words, get_stopwords
+from utils import get_words, get_stopwords, list_all_files
 
 def mode_c(file_pth):
     rule = re.compile(r"[^a-z]")
@@ -18,7 +19,7 @@ def mode_c(file_pth):
     for charactor , frequency in counter.most_common():
         print("Charactor: {0} Times: {1} Frequency: {2} "\
         .format(charactor , frequency , frequency/sum)) 
-    pass
+
 
 def mode_f(filename, n=0, stop_words_file=None):
     ''' - filename: .txt to read
@@ -46,8 +47,17 @@ def mode_f(filename, n=0, stop_words_file=None):
             print(str(key) + ':' + str(val))
             count += 1
 
-def mode_d(directory, is_recursive, n=0):
-    pass
+def mode_d(directory, is_recursive, n=0, stop_words_file=None):
+    if is_recursive:
+        file_list = list_all_files(directory)
+    else:
+        file_list = os.listdir(directory)
+        
+    for i in range(len(file_list)):
+        file_path = os.path.join(directory, file_list[i])
+        if os.path.isfile(file_path):
+            pass
+
     
 
 
