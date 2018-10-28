@@ -11,25 +11,40 @@ def get_sentences(text):
     return re.findall('[a-z0-9 \n\t\r]+', text)
 
 
-def get_phrases(text , n):
-    phrases = []
-    if n < 2:
-        sys.exit(2)
-    reg_rule = rule_verb
-    for i in range(n-1):
-        reg_rule += '[\t \n\r]+'+rule_verb
-    rule = re.compile(reg_rule)
-    while(1):
-        target = rule.search(text[:])
-        if target is None : 
-            break
-        target_span = target.span()
-        target_str = text[target_span[0]:target_span[1]]
-        phrases.append(target_str)
-        del_point = re.search(rule_verb+'[\r\t\n ]+',target_str).span()[1] +\
-            target_span[0]-1
-        text = text[del_point:]
-    return phrases
+
+def get_phrases(sentence , n):
+
+    def not_word(word):
+        return word[0] <= '9' and word[0] >= '0'
+
+    def get_preverb(sentence):
+        result = re.split('[ \n\t\r]+', sentence)
+        for item in result:
+            if item == '':
+                result.remove('')
+        return result
+    
+    result = []
+    pre_list = get_preverb(sentence)
+    try :
+      while(len(pre_list) >= n):
+        target_phrase = ""
+        for i in range(n):
+            if not_word(pre_list[i]):
+                for j in range(i):
+                    pre_list.pop(0)
+                    break
+            else:
+                if target_phrase != "":
+                    target_phrase += " "+pre_list[i]
+                else:
+                    target_phrase += pre_list[i]
+        result.append(target_phrase)
+        pre_list.pop(0)
+    except:
+        import ipdb
+        ipdb.set_trace()
+    return result     
         
 
 def get_stopwords(stop_words_file):
