@@ -1,10 +1,6 @@
-import re
-import os
-import sys
 import nltk
 
-
-def get_words(text): return re.findall('[a-z]+', text.lower())
+from utils import get_words, get_stopwords
 
 def mode_c():
     pass
