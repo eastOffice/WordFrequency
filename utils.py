@@ -26,24 +26,21 @@ def get_phrases(sentence , n):
     
     result = []
     pre_list = get_preverb(sentence)
-    try :
-      while(len(pre_list) >= n):
-        target_phrase = ""
+    while(len(pre_list) >= n):
+        target_phrase = []
         for i in range(n):
             if not_word(pre_list[i]):
-                for j in range(i):
+                for j in range(i+1):
                     pre_list.pop(0)
-                    break
+                break
             else:
-                if target_phrase != "":
-                    target_phrase += " "+pre_list[i]
-                else:
-                    target_phrase += pre_list[i]
-        result.append(target_phrase)
-        pre_list.pop(0)
-    except:
-        import ipdb
-        ipdb.set_trace()
+                target_phrase.append(pre_list[i])
+        if len(target_phrase) == n :
+            target_str = target_phrase[0]
+            for i in range(n-1):
+                target_str += " "+target_phrase[i+1] 
+            result.append(target_str)
+            pre_list.pop(0)
     return result     
         
 
