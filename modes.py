@@ -17,8 +17,7 @@ def mode_c(filename, n=26):
     count = 0
     for charactor , frequency in counter.most_common():
         if count == n: break
-        print("Charactor: {0} Times: {1} Frequency: {2} "\
-        .format(charactor , frequency , frequency/sum)) 
+        print('%40s\t%f' % (charactor, frequency/sum))
         count += 1
 
 
@@ -46,7 +45,7 @@ def mode_f(filename, n=0, stop_words_file=None):
         count = 0
         for key, val in word_freq:
             if count == n: break
-            print(str(key) + ':' + str(val))
+            print('%40s\t%d' % (str(key), val))
             count += 1
 
 
@@ -64,7 +63,7 @@ def mode_d(directory, is_recursive, n=0, stop_words_file=None):
                 file_list.append(t)
 
     for file in file_list:
-        print('processing: ', str(file))
+        print('File: %s' % file)
         mode_f(file, n, stop_words_file)
         
 
