@@ -2,7 +2,6 @@ import os
 import sys
 import re
 
-<<<<<<< HEAD
 def get_words(text): return re.findall('[a-z]+[0-9a-z]*', text.lower())
 
 def get_phrases(text , n):
@@ -25,9 +24,6 @@ def get_phrases(text , n):
         text = text[del_point:]
     return phrases
         
-=======
-def get_words(text): return re.findall('[a-z0-9]+', text.lower())
->>>>>>> e5b02af076a6abd149d84797bb3ab9fca4223f4e
 
 def get_stopwords(stop_words_file):
     with open(stop_words_file, 'r', encoding='utf-8') as f:
