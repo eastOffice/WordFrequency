@@ -21,8 +21,6 @@ def main(args):
             mode_f(args.file_name, args.n, args.x)
         elif args.p:
             mode_p(args.file_name, args.n, args.p)
-        elif args.d:
-            mode_d(args.file_name, args.s, args.n, args.x)
 
 if __name__ == '__main__':
     import argparse

@@ -57,9 +57,9 @@ def get_verbs(verbs_file):
         verb_list.append(get_words(line))
     verb_dict = {}
     for verb in verb_list:
-        verb_dict[verb[1]] = verb[0]
-        verb_dict[verb[2]] = verb[0]
-        verb_dict[verb[3]] = verb[0]
+        l = len(verb) - 1
+        for i in range(l):
+            verb_dict[verb[i+1]] = verb[0]
     return verb_dict
 
 
