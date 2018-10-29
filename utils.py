@@ -82,9 +82,17 @@ def stem(words, verbs_file):
     return words
 
 def print_dic(freq, n):
-    if n == 0 :
-        for key, val in freq:
-            print('%40s\t%d' % (str(key), val))
+    length = len(freq)
+    count = 0
+    if not n : n = 99999999
+    while(count<length and count<n):
+#        while(1):
+        min_str = freq[0](0)
+        max_freq = freq[0](1)
+        i = 0 
+        while max_freq != freq[i+1](1) :
+            if cmp(min_str) 
+        print('%40s\t%d' % (str(key), val))
     else:
         count = 0
         for key, val in freq:
