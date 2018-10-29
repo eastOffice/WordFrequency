@@ -81,3 +81,13 @@ def stem(words, verbs_file):
             word = verb_dict[word]
     return words
 
+def print_dic(freq, n):
+    if n == 0 :
+        for key, val in freq:
+            print('%40s\t%d' % (str(key), val))
+    else:
+        count = 0
+        for key, val in freq:
+            if count == n: break
+            print('%40s\t%d' % (str(key), val))
+            count += 1            
