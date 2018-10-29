@@ -92,6 +92,8 @@ def mode_p(file_pth , show_num , length, verb_file):
     t1 = time.time()
     print('get_sentences costs %s (s)' %(t1 - t0))
 
+    if verb_file is not None:
+        verb_file = get_verbs(verb_file)
     phrases = []
     for item in sentences:
         phrases.extend(get_phrases(item, length, verb_file))
