@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-
+import operator
 
 rule_verb = '[a-z0-9]+'
 
@@ -83,19 +83,18 @@ def print_dic(freq, n):
     count = 0
     if not n : n = 99999999
     while(count<length and count<n):
-#        while(1):
-        min_str = freq[0](0)
-        max_freq = freq[0](1)
+        min_str = freq[0][0]
+        max_freq = freq[0][1]
         i = 0 
-        while max_freq != freq[i+1](1) :
-            if cmp(min_str) 
-        print('%40s\t%d' % (str(key), val))
-    else:
-        count = 0
-        for key, val in freq:
-            if count == n: break
-            print('%40s\t%d' % (str(key), val))
-            count += 1
+        target = 0 
+        while(max_freq == freq[i+1][1]) :
+            if operator.lt(min_str , freq[i+1][0])  :
+               min_str = freq[i+1][0]
+               target = i
+            i = i+1
+        print('%40s\t%d' % (freq[target][0], freq[target][1]))
+        freq.pop(target)
+        count += 1
 
 def get_prepositions(prep_file):
     with open(prep_file, 'r', encoding='utf-8') as f:
