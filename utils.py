@@ -80,9 +80,9 @@ def print_dic(freq, n):
         i = 0 
         target = 0 
         while(max_freq == freq[i+1][1]) :
-            if operator.lt(min_str , freq[i+1][0])  :
+            if operator.gt(min_str , freq[i+1][0])  :
                min_str = freq[i+1][0]
-               target = i
+               target = i+1
             i = i+1
         print('%40s\t%d' % (freq[target][0], freq[target][1]))
         freq.pop(target)
