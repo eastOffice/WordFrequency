@@ -59,7 +59,7 @@ def mode_d(args):
         elif args.p:
             mode_p(file, args.n, args.p, args.v)
         elif args.q:
-            mode_q(file, args.n, args.v)
+            mode_q(file, args.q, args.n, args.v)
 
 @fn_timer
 def mode_f(filename, n=0, stop_words_file=None):
@@ -81,7 +81,7 @@ def mode_f(filename, n=0, stop_words_file=None):
     print_dic(word_freq, n)
 
 @fn_timer
-def mode_p(file_pth , show_num , length, verb_file):
+def mode_p(file_pth , n , length, verb_file):
 
     import time
     t0 = time.time()
@@ -110,14 +110,39 @@ def mode_p(file_pth , show_num , length, verb_file):
     phrases_freq = nltk.FreqDist(phrases)
     phrases_freq = sorted(phrases_freq.items(), \
         key=lambda item:item[1], reverse=True)
-    print_dic(phrases_freq, show_num)
-
-
+    print_dic(phrases_freq, n)
 
 
 @fn_timer
-def mode_q(file_name, n, verb_file):
+def mode_q(file_name, prep_file, n, verb_file):
     if verb_file is None:
         print('Please use -q along with -v.')
         return
+
+    import time
+    t0 = time.time()
+
     verbs = get_verbs(verb_file)
+    preps = get_prepositions(prep_file)
+
+    with open(file_name, 'r' , encoding='utf-8') as f:
+        sentences = get_sentences(f.read().lower())
+
+    t1 = time.time()
+    print('get_sentences costs %s (s)' %(t1 - t0))
+
+    phrases = []
+    for sentence in sentences:
+        pre_list = re.split('[ \n\t\r]+', sentence.strip())
+        for word in sentence:
+            if word in verbs:
+                word = verbs[word]
+        phrases.extend(get_phrases(pre_list, n, verb_file))
+
+    t2 = time.time()
+    print('get_phrases costs %s (s)' %(t2 - t1))
+
+    phrases_freq = nltk.FreqDist(phrases)
+    phrases_freq = sorted(phrases_freq.items(), \
+        key=lambda item:item[1], reverse=True)
+    print_dic(phrases_freq, n)

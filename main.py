@@ -20,7 +20,7 @@ def main(args):
         elif args.p:
             mode_p(args.file_name, args.n, args.p, args.v)
         elif args.q:
-            mode_q(args.file_name, args.n, args.v)
+            mode_q(args.file_name, args.q, args.n, args.v)
 
 if __name__ == '__main__':
     import argparse
