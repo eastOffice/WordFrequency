@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-
+import operator
 
 rule_verb = '[a-z0-9]+'
 
@@ -12,22 +12,14 @@ def get_sentences(text):
 
 
 
-def get_phrases(sentence , n , verbs_file):
+def get_phrases(pre_list, n , verbs_file):
 
     def not_word(word):
         return word[0] <= '9' and word[0] >= '0'
 
-    def get_preverb(sentence):
-        return re.split('[ \n\t\r]+', sentence.strip())
+    # def get_preverb(sentence):
+    #     return re.split('[ \n\t\r]+', sentence.strip())
     
-    pre_list = get_preverb(sentence)
-    # print(pre_list[0])
-    # if verbs_file is not None:
-    #     verb_dict = get_verbs(verbs_file)
-    #     for word in pre_list:
-    #         if word in verb_dict:
-    #             word = verb_dict[word]
-
     result = []
     while(len(pre_list) >= n):
         target_phrase = []
@@ -79,15 +71,22 @@ def list_all_files(rootdir):
 
 
 def print_dic(freq, n):
-    if n == 0 :
-        for key, val in freq:
-            print('%40s\t%d' % (str(key), val))
-    else:
-        count = 0
-        for key, val in freq:
-            if count == n: break
-            print('%40s\t%d' % (str(key), val))
-            count += 1      
+    length = len(freq)
+    count = 0
+    if not n : n = 99999999
+    while(count<length and count<n):
+        min_str = freq[0][0]
+        max_freq = freq[0][1]
+        i = 0 
+        target = 0 
+        while(max_freq == freq[i+1][1]) :
+            if operator.lt(min_str , freq[i+1][0])  :
+               min_str = freq[i+1][0]
+               target = i
+            i = i+1
+        print('%40s\t%d' % (freq[target][0], freq[target][1]))
+        freq.pop(target)
+        count += 1
 
 def get_prepositions(prep_file):
     with open(prep_file, 'r', encoding='utf-8') as f:

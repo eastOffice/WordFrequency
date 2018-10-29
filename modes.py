@@ -93,11 +93,17 @@ def mode_p(file_pth , show_num , length, verb_file):
     print('get_sentences costs %s (s)' %(t1 - t0))
 
     if verb_file is not None:
-        verb_file = get_verbs(verb_file)
-    phrases = []
-    for item in sentences:
-        phrases.extend(get_phrases(item, length, verb_file))
+        verbs = get_verbs(verb_file)
 
+    phrases = []
+    for sentence in sentences:
+        pre_list = re.split('[ \n\t\r]+', sentence.strip())
+        if verb_file is not None:
+            for word in sentence:
+                if word in verbs:
+                    word = verbs[word]
+        phrases.extend(get_phrases(pre_list, length, verb_file))
+        
     t2 = time.time()
     print('get_phrases costs %s (s)' %(t2 - t1))
 
@@ -105,6 +111,9 @@ def mode_p(file_pth , show_num , length, verb_file):
     phrases_freq = sorted(phrases_freq.items(), \
         key=lambda item:item[1], reverse=True)
     print_dic(phrases_freq, show_num)
+
+
+
 
 @fn_timer
 def mode_q(file_name, n, verb_file):
