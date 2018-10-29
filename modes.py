@@ -76,15 +76,7 @@ def mode_f(filename, n=0, stop_words_file=None):
                 word_freq.pop(key)
 
     word_freq = sorted(word_freq.items(), key=lambda item:item[1], reverse=True)
-    if n == 0:
-        for key, val in word_freq:
-            print('%40s\t%d' % (str(key), val))
-    else:
-        count = 0
-        for key, val in word_freq:
-            if count == n: break
-            print('%40s\t%d' % (str(key), val))
-            count += 1
+    print_dic(word_freq, n)
 
 @fn_timer
 def mode_p(file_pth , show_num , length):
@@ -108,12 +100,4 @@ def mode_p(file_pth , show_num , length):
     phrases_freq = nltk.FreqDist(phrases)
     phrases_freq = sorted(phrases_freq.items(), \
         key=lambda item:item[1], reverse=True)
-    if show_num == 0:
-        for key, val in phrases_freq:
-            print(str(key) + ':' + str(val))
-    else:
-        count = 0
-        for key, val in phrases_freq:
-            if count == show_num: break
-            print(str(key) + ':' + str(val))
-            count += 1
+    print_dic(phrases_freq, show_num)
