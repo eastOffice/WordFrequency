@@ -94,7 +94,7 @@ def mode_p(file_pth , show_num , length, verb_file):
 
     phrases = []
     for item in sentences:
-        phrases.extend(get_phrases(item, length))
+        phrases.extend(get_phrases(item, length, verb_file))
 
     t2 = time.time()
     print('get_phrases costs %s (s)' %(t2 - t1))

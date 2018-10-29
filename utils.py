@@ -12,20 +12,23 @@ def get_sentences(text):
 
 
 
-def get_phrases(sentence , n):
+def get_phrases(sentence , n , verbs_file):
 
     def not_word(word):
         return word[0] <= '9' and word[0] >= '0'
 
     def get_preverb(sentence):
-        result = re.split('[ \n\t\r]+', sentence)
-        for item in result:
-            if item == '':
-                result.remove('')
+        result = re.split('[ \n\t\r]+', sentence.strip())
         return result
     
-    result = []
     pre_list = get_preverb(sentence)
+    if verbs_file is not None:
+        verb_dict = get_verbs(verbs_file)
+        for word in pre_list:
+            if word in verb_dict:
+                word = verb_dict[word]
+
+    result = []
     while(len(pre_list) >= n):
         target_phrase = []
         for i in range(n):
@@ -74,12 +77,6 @@ def list_all_files(rootdir):
               _files.append(path)
     return _files
 
-def stem(words, verbs_file):
-    verb_dict = get_verbs(verbs_file)
-    for word in words:
-        if word in verb_dict:
-            word = verb_dict[word]
-    return words
 
 def print_dic(freq, n):
     length = len(freq)
