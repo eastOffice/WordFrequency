@@ -5,8 +5,6 @@ import time
 from modes import *
 
 
-
-
 def main(args):
     if args.file_name is None:
         print("Input a File")
@@ -20,9 +18,9 @@ def main(args):
         elif args.f:
             mode_f(args.file_name, args.n, args.x)
         elif args.p:
-            mode_p(args.file_name, args.n, args.p)
-        elif args.d:
-            mode_d(args.file_name, args.s, args.n, args.x)
+            mode_p(args.file_name, args.n, args.p, args.v)
+        elif args.q:
+            mode_q(args.file_name, args.n, args.v)
 
 if __name__ == '__main__':
     import argparse
@@ -35,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', action='store_true')
     parser.add_argument('-x', type=str)
     parser.add_argument('-v', type=str)
+    parser.add_argument('-q', type=str)
     parser.add_argument('file_name', type=str)
 
     args = parser.parse_args()
