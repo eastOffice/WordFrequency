@@ -85,6 +85,8 @@ def print_dic(freq, n):
     while(count<length and count<n):
         min_str = freq[0][0]
         max_freq = freq[0][1]
+        if max_freq <= 1 : 
+            break
         i = 0 
         target = 0 
         while(max_freq == freq[i+1][1]) :
