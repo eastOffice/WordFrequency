@@ -90,4 +90,9 @@ def print_dic(freq, n):
         for key, val in freq:
             if count == n: break
             print('%40s\t%d' % (str(key), val))
-            count += 1            
+            count += 1
+
+def get_prepositions(prep_file):
+    with open(prep_file, 'r', encoding='utf-8') as f:
+        prep_file = f.read().strip().split('\n')
+    return prep_file

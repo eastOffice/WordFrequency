@@ -57,7 +57,9 @@ def mode_d(args):
         if args.f:
             mode_f(file, args.n, args.x)
         elif args.p:
-            mode_p(file, args.n, args.p)
+            mode_p(file, args.n, args.p, args.v)
+        elif args.q:
+            mode_q(file, args.n, args.v)
 
 @fn_timer
 def mode_f(filename, n=0, stop_words_file=None):
@@ -79,7 +81,7 @@ def mode_f(filename, n=0, stop_words_file=None):
     print_dic(word_freq, n)
 
 @fn_timer
-def mode_p(file_pth , show_num , length):
+def mode_p(file_pth , show_num , length, verb_file):
 
     import time
     t0 = time.time()
@@ -101,3 +103,10 @@ def mode_p(file_pth , show_num , length):
     phrases_freq = sorted(phrases_freq.items(), \
         key=lambda item:item[1], reverse=True)
     print_dic(phrases_freq, show_num)
+
+@fn_timer
+def mode_q(file_name, n, verb_file):
+    if verb_file is None:
+        print('Please use -q along with -v.')
+        return
+    verbs = get_verbs(verb_file)
