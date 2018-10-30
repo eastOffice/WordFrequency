@@ -1,7 +1,6 @@
 import os
 import sys
 import re
-import operator
 
 rule_verb = '[a-z0-9]+'
 
@@ -71,24 +70,22 @@ def list_all_files(rootdir):
 
 
 def print_dic(freq, n):
-    length = len(freq)
     count = 0
-    if not n : n = 99999999
-    while(count<length and count<n):
-        min_str = freq[0][0]
-        max_freq = freq[0][1]
-        if max_freq <= 1 : 
+    length = len(freq)
+    if n == 0 : n = 99999
+    seq_list = [freq[0]]
+    for i in range(1,length):
+        if freq[i][1] == seq_list[0][1] and i != length-1:
+                seq_list.append(freq[i])
+        else:
+            seq_list.sort(key=lambda item:item[0],reverse=False)
+            for key , var in seq_list:
+                print('%40s\t%d' % (key, var))
+                count += 1
+            seq_list = [freq[i]]
+        if count >= n:
             break
-        i = 0 
-        target = 0 
-        while(max_freq == freq[i+1][1]) :
-            if operator.gt(min_str , freq[i+1][0])  :
-               min_str = freq[i+1][0]
-               target = i+1
-            i = i+1
-        print('%40s\t%d' % (freq[target][0], freq[target][1]))
-        freq.pop(target)
-        count += 1
+
 
 def get_prepositions(prep_file):
     with open(prep_file, 'r', encoding='utf-8') as f:
