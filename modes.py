@@ -136,11 +136,16 @@ def mode_q(file_name, prep_file, n, verb_file):
     phrases = []
     for sentence in sentences:
         pre_list = re.split('[ \n\t\r]+', sentence.strip())
-        for i in range(len(pre_list)):
+        for i in range(len(pre_list)-1):
             if pre_list[i] in verbs:
-                pre_list[i] = verbs[pre_list[i]]
-        phrases.extend(get_phrases(pre_list, 2))
-
+                if pre_list[i+1] in preps:
+                    pre_list[i] = verbs[pre_list[i]]
+                    phrases.append(pre_list[i]+' '+pre_list[i+1])
+                else:
+                    continue
+            else:
+                continue
+                
     t2 = time.time()
     print('get_phrases costs %s (s)' %(t2 - t1))
 
