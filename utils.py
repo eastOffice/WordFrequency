@@ -21,18 +21,16 @@ def get_phrases(pre_list, n ):
     
     result = []
     for j in range(len(pre_list)+1-n):
-        target_phrase = []
+        target_phrase = ""
         for i in range(n):
             if not_word(pre_list[i+j]):
                 j += i
                 break
-            else:
-                target_phrase.append(pre_list[i+j])
-        if len(target_phrase) == n :
-            target_str = target_phrase[0]
-            for i in range(n-1):
-                target_str += " "+target_phrase[i+1] 
-            result.append(target_str)
+            elif target_phrase == "":
+                target_phrase += pre_list[i+j]
+            else :
+                target_phrase += (' ' + pre_list[i+j])
+        result.append(target_phrase)
     return result     
         
 
