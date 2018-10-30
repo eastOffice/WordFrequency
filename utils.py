@@ -48,7 +48,7 @@ def get_verbs(verbs_file):
         verbs = f.read().strip().split('\n')   
     verb_list = []
     for line in verbs:
-        verb_list.append(get_words(line))
+        verb_list.append(re.split(r'[ ,]', line))
     verb_dict = {}
     for verb in verb_list:
         l = len(verb) - 1

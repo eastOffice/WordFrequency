@@ -18,7 +18,7 @@ def main(args):
         elif args.f:
             mode_f(args.file_name, args.n, args.x)
         elif args.p:
-            mode_p(args.file_name, args.n, args.p, args.v)
+            mode_p(args.file_name, args.n, args.p, args.v, args.x)
         elif args.q:
             mode_q(args.file_name, args.q, args.n, args.v)
 
