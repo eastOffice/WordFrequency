@@ -20,21 +20,19 @@ def get_phrases(pre_list, n ):
     #     return re.split('[ \n\t\r]+', sentence.strip())
     
     result = []
-    while(len(pre_list) >= n):
+    for j in range(len(pre_list)+1-n):
         target_phrase = []
         for i in range(n):
-            if not_word(pre_list[i]):
-                for j in range(i+1):
-                    pre_list.pop(0)
+            if not_word(pre_list[i+j]):
+                j += i
                 break
             else:
-                target_phrase.append(pre_list[i])
+                target_phrase.append(pre_list[i+j])
         if len(target_phrase) == n :
             target_str = target_phrase[0]
             for i in range(n-1):
                 target_str += " "+target_phrase[i+1] 
             result.append(target_str)
-            pre_list.pop(0)
     return result     
         
 
