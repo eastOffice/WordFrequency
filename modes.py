@@ -100,7 +100,7 @@ def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
         pre_list = re.split('[ \n\t\r]+', sentence.strip())
         if stop_words_file is not None:
             pre_list = [word for word in pre_list if word not in stop_words]
-        elif verb_file is not None:
+        if verb_file is not None:
             for i in range(len(pre_list)):
                 if pre_list[i] in verbs:
                     pre_list[i] = verbs[pre_list[i]]
