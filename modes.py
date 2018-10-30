@@ -85,7 +85,6 @@ def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
 
     import time
     t0 = time.time()
-
     with open(file_pth, 'r' , encoding='utf-8') as f:
         sentences = get_sentences(f.read().lower())
     
@@ -99,18 +98,12 @@ def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
     phrases = []
     for sentence in sentences:
         pre_list = re.split('[ \n\t\r]+', sentence.strip())
-        if verb_file is not None:
-            for word in pre_list:
-                if word in stop_words:
-                    pre_list.remove(word)
-                elif word in verbs:
-                    word = verbs[word]
-        # deal with only -x, no -v
-        elif stop_words_file is not None:
-            for word in pre_list:
-                if word in stop_words:
-                    print('remove: ', word)
-                    pre_list.remove(word)
+        if stop_words_file is not None:
+            pre_list = [word for word in pre_list if word not in stop_words]
+        elif verb_file is not None:
+            for i in range(len(pre_list)):
+                if pre_list[i] in verbs:
+                    pre_list[i] = verbs[pre_list[i]]
         phrases.extend(get_phrases(pre_list, length))
         
     t2 = time.time()
@@ -143,9 +136,9 @@ def mode_q(file_name, prep_file, n, verb_file):
     phrases = []
     for sentence in sentences:
         pre_list = re.split('[ \n\t\r]+', sentence.strip())
-        for word in pre_list:
-            if word in verbs:
-                word = verbs[word]
+        for i in range(len(pre_list)):
+            if pre_list[i] in verbs:
+                pre_list[i] = verbs[pre_list[i]]
         phrases.extend(get_phrases(pre_list, 2))
 
     t2 = time.time()
