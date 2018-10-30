@@ -94,15 +94,14 @@ def mode_p(file_pth , n , length, verb_file):
 
     if verb_file is not None:
         verbs = get_verbs(verb_file)
-
     phrases = []
     for sentence in sentences:
         pre_list = re.split('[ \n\t\r]+', sentence.strip())
         if verb_file is not None:
-            for word in sentence:
-                if word in verbs:
-                    word = verbs[word]
-        phrases.extend(get_phrases(pre_list, length, verb_file))
+            for i in range(len(pre_list)):
+                if pre_list[i] in verbs:
+                    pre_list[i] = verbs[pre_list[i]]
+        phrases.extend(get_phrases(pre_list, length))
         
     t2 = time.time()
     print('get_phrases costs %s (s)' %(t2 - t1))

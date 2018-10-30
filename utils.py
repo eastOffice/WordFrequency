@@ -11,7 +11,7 @@ def get_sentences(text):
 
 
 
-def get_phrases(pre_list, n , verbs_file):
+def get_phrases(pre_list, n ):
 
     def not_word(word):
         return word[0] <= '9' and word[0] >= '0'
