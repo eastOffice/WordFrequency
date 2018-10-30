@@ -39,7 +39,7 @@ def get_phrases(pre_list, n ):
 def get_stopwords(stop_words_file):
     with open(stop_words_file, 'r', encoding='utf-8') as f:
         stop_words = f.read().strip().split('\n')
-    return stop_words
+    return set(stop_words)
 
 def get_verbs(verbs_file):
     with open(verbs_file, 'r', encoding='utf-8') as f:
@@ -88,4 +88,4 @@ def print_dic(freq, n):
 def get_prepositions(prep_file):
     with open(prep_file, 'r', encoding='utf-8') as f:
         prep_file = f.read().strip().split('\n')
-    return prep_file
+    return set(prep_file)

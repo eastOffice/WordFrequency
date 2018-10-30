@@ -37,7 +37,7 @@ def mode_c(file_name , n=0):
         count += 1
 
 
-@fn_timer
+#@fn_timer
 def mode_d(args):
     directory = args.file_name
     if args.s:
@@ -61,7 +61,7 @@ def mode_d(args):
         elif args.q:
             mode_q(file, args.q, args.n, args.v)
 
-@fn_timer
+#@fn_timer
 def mode_f(filename, n=0, stop_words_file=None):
     ''' - filename: .txt to read
         - n: return the first n words, 0 returns all
@@ -80,16 +80,16 @@ def mode_f(filename, n=0, stop_words_file=None):
     word_freq = sorted(word_freq.items(), key=lambda item:item[1], reverse=True)
     print_dic(word_freq, n)
 
-@fn_timer
+#@fn_timer
 def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
 
-    import time
-    t0 = time.time()
+    # import time
+    # t0 = time.time()
     with open(file_pth, 'r' , encoding='utf-8') as f:
         sentences = get_sentences(f.read().lower())
     
-    t1 = time.time()
-    print('get_sentences costs %s (s)' %(t1 - t0))
+    # t1 = time.time()
+    # print('get_sentences costs %s (s)' %(t1 - t0))
 
     stop_words = get_stopwords(stop_words_file) if stop_words_file is not None else []
 
@@ -106,8 +106,8 @@ def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
                     pre_list[i] = verbs[pre_list[i]]
         phrases.extend(get_phrases(pre_list, length))
         
-    t2 = time.time()
-    print('get_phrases costs %s (s)' %(t2 - t1))
+    # t2 = time.time()
+    # print('get_phrases costs %s (s)' %(t2 - t1))
 
     phrases_freq = nltk.FreqDist(phrases)
     phrases_freq = sorted(phrases_freq.items(), \
@@ -115,14 +115,14 @@ def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
     print_dic(phrases_freq, n)
 
 
-@fn_timer
+#@fn_timer
 def mode_q(file_name, prep_file, n, verb_file):
     if verb_file is None:
         print('Please use -q along with -v.')
         return
 
-    import time
-    t0 = time.time()
+    # import time
+    # t0 = time.time()
 
     verbs = get_verbs(verb_file)
     preps = get_prepositions(prep_file)
@@ -130,8 +130,8 @@ def mode_q(file_name, prep_file, n, verb_file):
     with open(file_name, 'r' , encoding='utf-8') as f:
         sentences = get_sentences(f.read().lower())
 
-    t1 = time.time()
-    print('get_sentences costs %s (s)' %(t1 - t0))
+    # t1 = time.time()
+    # print('get_sentences costs %s (s)' %(t1 - t0))
 
     phrases = []
     for sentence in sentences:
@@ -146,8 +146,8 @@ def mode_q(file_name, prep_file, n, verb_file):
             else:
                 continue
                 
-    t2 = time.time()
-    print('get_phrases costs %s (s)' %(t2 - t1))
+    # t2 = time.time()
+    # print('get_phrases costs %s (s)' %(t2 - t1))
 
     phrases_freq = nltk.FreqDist(phrases)
     phrases_freq = sorted(phrases_freq.items(), \
