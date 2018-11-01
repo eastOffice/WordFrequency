@@ -30,7 +30,8 @@ def get_phrases(pre_list, n ):
                 target_phrase += pre_list[i+j]
             else :
                 target_phrase += (' ' + pre_list[i+j])
-        result.append(target_phrase)
+            if i == n-1:
+                result.append(target_phrase)
     return result     
         
 
