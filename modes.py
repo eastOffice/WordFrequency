@@ -80,7 +80,7 @@ def mode_f(filename, n=0, stop_words_file=None):
     word_freq = sorted(word_freq.items(), key=lambda item:item[1], reverse=True)
     print_dic(word_freq, n)
 
-#@fn_timer
+@fn_timer
 def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
 
     # import time
@@ -115,7 +115,7 @@ def mode_p(file_pth , n , length, verb_file=None, stop_words_file=None):
     print_dic(phrases_freq, n)
 
 
-#@fn_timer
+@fn_timer
 def mode_q(file_name, prep_file, n, verb_file):
     if verb_file is None:
         print('Please use -q along with -v.')
