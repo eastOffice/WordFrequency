@@ -4,7 +4,6 @@ import time
 
 from modes import *
 
-
 def main(args):
     if args.file_name is None:
         print("Input a File")

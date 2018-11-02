@@ -5,16 +5,41 @@ from functools import wraps
 
 from utils import *
 
-def fn_timer(function): 
-    @wraps(function)
-    def function_timer(*args, **kwargs):
-        import time
-        t0 = time.time()
-        result = function(*args, **kwargs)
-        t1 = time.time()
-        print('%s costs %s (s)' %(function, t1 - t0))
-        return result
-    return function_timer
+# def fn_timer(function): 
+#     @wraps(function)
+#     def function_timer(*args, **kwargs):
+#         import time
+#         t0 = time.time()
+#         result = function(*args, **kwargs)
+#         t1 = time.time()
+#         print('%s costs %s (s)' %(function, t1 - t0))
+#         return result
+#     return function_timer
+
+def mode_d(args):
+    directory = args.file_name
+    if args.s:
+        # here returns the final path
+        file_list = list_all_files(directory)
+    else:
+        # here is only the relative path, need path.join
+        fl = os.listdir(directory)
+        file_list = []
+        for i in range(len(fl)):
+            t = os.path.join(directory, fl[i])
+            if os.path.isfile(t):
+                file_list.append(t)
+
+    for file in file_list:
+        print('File: %s' % file)
+        if args.c:
+            mode_c(file, args.n)
+        elif args.f:
+            mode_f(file, args.n, args.x)
+        elif args.p:
+            mode_p(file, args.n, args.p, args.v, args.x)
+        elif args.q:
+            mode_q(file, args.q, args.n, args.v)
 
 def mode_c(file_name , n=0):
     rule = re.compile(r"[^a-z]")
@@ -35,31 +60,6 @@ def mode_c(file_name , n=0):
             break
         print('%40s\t%f' % (charactor, frequency/sum))
         count += 1
-
-
-#@fn_timer
-def mode_d(args):
-    directory = args.file_name
-    if args.s:
-        # here returns the final path
-        file_list = list_all_files(directory)
-    else:
-        # here is only the relative path, need path.join
-        fl = os.listdir(directory)
-        file_list = []
-        for i in range(len(fl)):
-            t = os.path.join(directory, fl[i])
-            if os.path.isfile(t):
-                file_list.append(t)
-
-    for file in file_list:
-        print('File: %s' % file)
-        if args.f:
-            mode_f(file, args.n, args.x)
-        elif args.p:
-            mode_p(file, args.n, args.p, args.v, args.x)
-        elif args.q:
-            mode_q(file, args.q, args.n, args.v)
 
 #@fn_timer
 def mode_f(filename, n=0, stop_words_file=None):
@@ -140,10 +140,6 @@ def mode_q(file_name, prep_file, n, verb_file):
                 if pre_list[i+1] in preps:
                     pre_list[i] = verbs[pre_list[i]]
                     phrases.append(pre_list[i]+' '+pre_list[i+1])
-                else:
-                    continue
-            else:
-                continue
                 
     # t2 = time.time()
     # print('get_phrases costs %s (s)' %(t2 - t1))
